@@ -1,0 +1,53 @@
+<h1>CRUD Simples</h1>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div>
+    <label>Nome:</label>
+    <input formControlName="name" placeholder="Nome">
+    <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" style="color: red;">
+    <small *ngIf="form.get('name')?.errors?.['required']">O nome é obrigatório.</small>
+    <small *ngIf="form.get('name')?.errors?.['minlength']">Deve ter no mínimo 3 caracteres.</small>
+</div>
+
+ <div>
+  <label>Idade:</label>
+  <input type="number" formControlName="age" placeholder="Idade" />
+  
+  <div *ngIf="form.get('age')?.touched && form.get('age')?.invalid" style="color: red;">
+    <small *ngIf="form.get('age')?.errors?.['required']">A idade é obrigatória.</small>
+    <small *ngIf="form.get('age')?.errors?.['maxlength']">Deve ter no máximo 3 caracteres.</small>
+    <small *ngIf="form.get('age')?.errors?.['min']">A idade deve ser maior que zero.</small>
+  </div>
+</div>
+
+
+  <div>
+  <label>Descrição:</label>
+  <input formControlName="description" placeholder="Descrição" />
+  
+  <div *ngIf="form.get('description')?.touched && form.get('description')?.invalid" style="color: red;">
+    <small *ngIf="form.get('description')?.errors?.['required']">A descrição é obrigatória.</small>
+    <small *ngIf="form.get('description')?.errors?.['maxlength']">Deve ter no máximo 120 caracteres.</small>
+  </div>
+</div>
+
+
+  </div>
+
+  <button type="submit">
+    {{ selectedId ? 'Atualizar' : 'Criar' }}
+  </button>
+  <button type="button" (click)="clearForm()">Limpar</button>
+</form>
+
+<hr>
+
+<h2>Usuários:</h2>
+<div *ngFor="let user of users">
+  <p>
+    <b>{{ user.name }}</b> ({{ user.age }}) - {{ user.description }}
+    <button (click)="edit(user)">Editar</button>
+    <button (click)="delete(user.id!)">Deletar</button>
+  </p>
+</div>
+
